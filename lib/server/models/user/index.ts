@@ -28,12 +28,17 @@ const schema = new Schema<UserAttributes, UserModel>({
   email: {
     type: String,
     required: [true, 'Email field is required'],
+    unique: true,
   },
   passwordHash: {
     type: String,
     required: [true, 'Password hash field is required'],
   },
 });
+
+schema.static('hashPassword', hashPassword);
+schema.static('normalizeEmail', normalizeEmail);
+schema.static('fromRaw', fromRaw);
 
 export const userCollection = 'users';
 export const User = mongoose.model<UserAttributes, UserModel>('User', schema, userCollection);

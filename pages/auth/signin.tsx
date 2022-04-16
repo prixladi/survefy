@@ -20,15 +20,21 @@ const Home: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<Values>();
-  const { mutate } = useUserCreateMutation();
+  const { mutateAsync } = useUserCreateMutation();
 
   return (
     <div>
       <SEO title={tAuth('signin.title')} />
       <div className="mx-2">
         <AuthForm
-          onSubmit={handleSubmit((data) => mutate(data))}
+          onSubmit={handleSubmit(async (data) => {
+            const response = await mutateAsync(data);
+            if (response.status === 'conflict') {
+              setError('email', { type: 'manual', message: 'Email already exists' });
+            }
+          })}
           fieldsSection={
             <>
               <EmailInput register={register} error={errors.email} />

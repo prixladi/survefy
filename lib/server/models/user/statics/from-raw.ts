@@ -5,10 +5,10 @@ type Data = {
   password: string;
 };
 
-const fromRaw = (data: Data) =>
+const fromRaw = async (data: Data) =>
   new User({
     email: User.normalizeEmail(data.email),
-    passwordHash: User.hashPassword(data.password),
+    passwordHash: await User.hashPassword(data.password),
   });
 
 export default fromRaw;
