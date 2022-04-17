@@ -2,10 +2,14 @@ import Iron from '@hapi/iron';
 
 import { UserAuthPayload } from '~types';
 
-// eslint-disable-next-line @next/next/no-server-import-in-page
-import type { NextRequest } from 'next/server';
-import { MAX_AGE, setTokenCookie, getTokenCookie, removeTokenCookie } from './cookies';
-import { ApiRequest, ApiResponse } from './types';
+import {
+  MAX_AGE,
+  setTokenCookie,
+  getTokenCookie,
+  removeTokenCookie,
+  CookieRequest,
+} from './cookies';
+import { ApiResponse } from './types';
 import config from './config';
 
 type Session = UserAuthPayload & {
@@ -24,11 +28,17 @@ const session = {
   destroyLoginSession: async (res: ApiResponse) => {
     removeTokenCookie(res);
   },
-  getLoginSession: async (req: ApiRequest | NextRequest) => {
+  getLoginSession: async (req: CookieRequest) => {
     const token = getTokenCookie(req);
-    if (!token) return null;
+    if (!token || !token.startsWith(Iron.macPrefix)) return null;
 
-    const sess = (await Iron.unseal(token, config.session.secret, Iron.defaults)) as Session;
+    let sess: Session;
+    try {
+      sess = await Iron.unseal(token, config.session.secret, Iron.defaults);
+    } catch (err: any) {
+      if (err.message === 'Bad hmac value') return null;
+      throw err;
+    }
     const expiresAt = sess.createdAt + sess.maxAge * 1000;
 
     if (Date.now() > expiresAt) {

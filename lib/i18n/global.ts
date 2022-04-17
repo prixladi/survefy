@@ -5,6 +5,7 @@ const global = {
   signUp: 'sign up',
   password: 'password',
   email: 'email',
+  dashboard: 'dashboard',
   appSuffix: '| Survefy',
   serverError: 'There was an error comunicating with server',
 };

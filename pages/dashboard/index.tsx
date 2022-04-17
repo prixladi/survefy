@@ -1,13 +1,35 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 
 import useLogout from '~lib/hooks/use-logout';
+import session from '~lib/server/session';
+import { UserAuthPayload } from '~types';
 
-const Dashboard: NextPage = () => {
+type PageProps = {
+  user: UserAuthPayload;
+};
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async (context) => {
+  const user = (await session.getLoginSession(context.req)) as UserAuthPayload;
+  if (!user) {
+    return {
+      redirect: {
+        destination: '/auth/signout',
+      },
+      props: {
+        user,
+      },
+    };
+  }
+
+  return { props: { user } };
+};
+
+const Dashboard: NextPage<PageProps> = ({ user }) => {
   const { logoutAsync } = useLogout();
 
   return (
     <div>
-      <main>DASH</main>
+      <div>{JSON.stringify(user)}</div>
       <button type="button" onClick={logoutAsync}>
         Logout
       </button>

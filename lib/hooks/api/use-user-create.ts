@@ -8,8 +8,8 @@ type Response =
   | { status: 'conflict'; data?: undefined }
   | { status: 'serverError'; data?: undefined };
 
-export default function useUserCreateMutation() {
-  return useMutation(async (model: UserCreateModel): Promise<Response> => {
+const useUserCreateMutation = () =>
+  useMutation(async (model: UserCreateModel): Promise<Response> => {
     const { status, data } = await axios.post('/api/users', model, {
       validateStatus: () => true,
     });
@@ -19,4 +19,5 @@ export default function useUserCreateMutation() {
 
     return { status: 'ok', data };
   });
-}
+
+export default useUserCreateMutation;

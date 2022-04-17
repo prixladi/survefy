@@ -1,10 +1,18 @@
 import { serialize, parse } from 'cookie';
-// eslint-disable-next-line @next/next/no-server-import-in-page
-import { NextRequest } from 'next/server';
 
-import { ApiRequest, ApiResponse } from './types';
+import { ApiResponse } from './types';
 
-const TOKEN_NAME = 'token';
+export type CookieRequest =
+  | {
+      cookies: Record<string, string>;
+    }
+  | {
+      headers: {
+        cookie: string | undefined;
+      };
+    };
+
+const TOKEN_NAME = '_sub';
 
 export const MAX_AGE = 60 * 60 * 24 * 365 * 10; // 10 years
 
@@ -30,14 +38,14 @@ export const removeTokenCookie = (res: ApiResponse) => {
   res.setHeader('Set-Cookie', cookie);
 };
 
-export const parseCookies = (req: ApiRequest | NextRequest) => {
-  if (req.cookies) return req.cookies;
+export const parseCookies = (req: CookieRequest) => {
+  if ('cookies' in req && req.cookies) return req.cookies;
 
-  const cookie = 'cookie' in req.headers && req.headers?.cookie;
+  const cookie = 'headers' in req && req.headers?.cookie;
   return parse(cookie || '');
 };
 
-export const getTokenCookie = (req: ApiRequest | NextRequest) => {
+export const getTokenCookie = (req: CookieRequest) => {
   const cookies = parseCookies(req);
   return cookies[TOKEN_NAME];
 };

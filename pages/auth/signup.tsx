@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 
 import { UserCreateModel } from '~types';
-import useUserCreateMutation from '~lib/hooks/api/use-user-create-mutation';
+import useUserCreateMutation from '~lib/hooks/api/use-user-create';
 
 import SEO from '~components/seo';
 import AuthForm from '~components/auth/auth-form';
@@ -15,7 +15,7 @@ import useLogin from '~lib/hooks/use-login';
 
 type Values = UserCreateModel;
 
-const Home: NextPage = () => {
+const Signup: NextPage = () => {
   const { t } = useTranslation('t');
   const { t: tAuth } = useTranslation('t', { keyPrefix: 'pages.auth' });
   const {
@@ -62,4 +62,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Signup;

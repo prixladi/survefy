@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import type { NextPage } from 'next';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 
@@ -8,7 +7,11 @@ import Logo from './logo';
 import BurgerIcon from './burger-icon';
 import Cross from './cross-icon';
 
-const Navbar: NextPage = () => {
+type Props = {
+  isLoggedIn: boolean;
+};
+
+const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation('t');
 
@@ -26,19 +29,29 @@ const Navbar: NextPage = () => {
             </button>
           </div>
           <div className="flex items-center flex-col">
-            <Logo />
+            <Link href="/">
+              <a>
+                <Logo />
+              </a>
+            </Link>
           </div>
           <div className="mt-10">
             <ul className="gap-2 lg:gap-12 flex flex-col text-center text-2xl">
-              <Link href="/auth/signin">
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a className="pb-2 px-3">{t('$t(login, capitalize)')}</a>
-              </Link>
-              <span className="italic text-sm">- or -</span>
-              <Link href="/auth/signup">
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a className=" px-3">{t('$t(sign up, capitalize)')}</a>
-              </Link>
+              {isLoggedIn ? (
+                <Link href="/dashboard">
+                  <a className="pb-2 px-3">{t('$t(dashboard, capitalize)')}</a>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/auth/signin">
+                    <a className="pb-2 px-3">{t('$t(login, capitalize)')}</a>
+                  </Link>
+                  <span className="italic text-sm">- or -</span>
+                  <Link href="/auth/signup">
+                    <a className=" px-3">{t('$t(sign up, capitalize)')}</a>
+                  </Link>
+                </>
+              )}
             </ul>
           </div>
         </nav>
@@ -47,19 +60,31 @@ const Navbar: NextPage = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between">
           <div className="flex space-x-4">
-            <Logo />
-          </div>
-          <div className="hidden md:flex items-center space-x-1 text-sm">
-            <Link href="/auth/signin">
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a className="py-5 px-3">{t('$t(login, capitalize)')}</a>
-            </Link>
-            <Link href="/auth/signup">
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
-                {t('$t(sign up, capitalize)')}
+            <Link href="/">
+              <a>
+                <Logo />
               </a>
             </Link>
+          </div>
+          <div className="hidden md:flex items-center space-x-1 text-sm">
+            {isLoggedIn ? (
+              <Link href="/dashboard">
+                <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
+                  {t('$t(dashboard, capitalize)')}
+                </a>
+              </Link>
+            ) : (
+              <>
+                <Link href="/auth/signin">
+                  <a className="py-5 px-3">{t('$t(login, capitalize)')}</a>
+                </Link>
+                <Link href="/auth/signup">
+                  <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
+                    {t('$t(sign up, capitalize)')}
+                  </a>
+                </Link>{' '}
+              </>
+            )}
           </div>
           <div className="flex md:hidden">
             <button

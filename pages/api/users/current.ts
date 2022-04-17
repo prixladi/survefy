@@ -7,7 +7,7 @@ import { UserLoginModel } from '~types';
 const router = nc();
 
 router.get<ApiRequest<UserLoginModel>, ApiResponse>(auth.protect({}), async (req, res) => {
-  res.json(req.user);
+  res.status(200).json(req.user);
 });
 
 export default router;

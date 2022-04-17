@@ -7,7 +7,6 @@ type Props = {
 
 const PageMove: React.FC<Props> = ({ href, text }) => (
   <Link href={href}>
-    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
     <a className="inline-block align-baseline font-bold text-md text-amber-900 hover:no-underline">
       {text}
     </a>

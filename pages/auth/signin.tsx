@@ -14,7 +14,7 @@ import useLogin from '~lib/hooks/use-login';
 
 type Values = UserCreateModel;
 
-const Home: NextPage = () => {
+const Signin: NextPage = () => {
   const { t } = useTranslation('t');
   const { t: tAuth } = useTranslation('t', { keyPrefix: 'pages.auth' });
   const {
@@ -57,4 +57,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Signin;
