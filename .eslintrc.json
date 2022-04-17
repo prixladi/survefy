@@ -21,10 +21,10 @@
   },
   "rules": {
     "react/jsx-props-no-spreading": 0,
-    "import/no-cycle": 0,
-    "@typescript-eslint/no-redeclare": 0,
-    "react/no-array-index-key": 0,
     "no-underscore-dangle": 0,
+    "import/no-cycle": 1,
+    "@typescript-eslint/no-redeclare": 1,
+    "react/no-array-index-key": 1,
 
     "filenames/match-regex": ["error", "^_?[a-z][a-z-.]*[a-z]$"],
     "react/function-component-definition": [

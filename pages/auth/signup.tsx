@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 
 import { UserCreateModel } from '~types';
 import useUserCreateMutation from '~lib/hooks/api/use-user-create-mutation';
-import useUserLogin from '~lib/hooks/api/user-user-login';
 
 import SEO from '~components/seo';
 import AuthForm from '~components/auth/auth-form';
@@ -12,21 +11,21 @@ import EmailInput from '~components/auth/email-input';
 import PasswordInput from '~components/auth/password-input';
 import SubmitButton from '~components/auth/submit-button';
 import PageMove from '~components/auth/page-move';
-import { useRouter } from 'next/router';
+import useLogin from '~lib/hooks/use-login';
 
 type Values = UserCreateModel;
 
 const Home: NextPage = () => {
+  const { t } = useTranslation('t');
   const { t: tAuth } = useTranslation('t', { keyPrefix: 'pages.auth' });
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm<Values>();
   const { mutateAsync: createAsync } = useUserCreateMutation();
-  const { mutateAsync: loginAsync } = useUserLogin();
-  const router = useRouter();
+  const { loginAsync } = useLogin();
 
   return (
     <div>
@@ -35,12 +34,15 @@ const Home: NextPage = () => {
         onSubmit={handleSubmit(async (data) => {
           const response = await createAsync(data);
           if (response.status === 'conflict') {
-            setError('email', { type: 'manual', message: 'Email already exists' });
+            setError('email', { type: 'manual', message: tAuth('emailDuplicate') });
+          }
+          if (response.status === 'serverError') {
+            setError('email', { type: 'manual', message: t('serverError') });
+            setError('password', { type: 'manual', message: t('serverError') });
           }
 
           if (response.status === 'ok') {
             await loginAsync(data);
-            router.push('/dashboard');
           }
         })}
         fieldsSection={
@@ -51,7 +53,7 @@ const Home: NextPage = () => {
         }
         submitSection={
           <>
-            <SubmitButton text={tAuth('signup.button')} />
+            <SubmitButton isSubmitting={isSubmitting} text={tAuth('signup.button')} />
             <PageMove href="/auth/signin" text={tAuth('signup.goToSignin')} />
           </>
         }

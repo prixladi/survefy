@@ -4,7 +4,7 @@ import nc from 'next-connect';
 import { bootstrap } from '~lib/server';
 import auth from '~lib/server/api/auth';
 import validation from '~lib/server/api/validation';
-import { setLoginSession } from '~lib/server/auth';
+import session from '~lib/server/session';
 import { ApiRequest, ApiResponse } from '~lib/server/types';
 import { UserLoginModel } from '~types';
 
@@ -20,9 +20,9 @@ router.post<ApiRequest<UserLoginModel>, ApiResponse>(
   validation({ body: bodySchema }),
   auth.authenticate(),
   async (req, res) => {
-    const session = req.user;
+    const { user } = req;
 
-    await setLoginSession(res, session);
+    await session.setLoginSession(res, user);
 
     res.json(req.user);
   },

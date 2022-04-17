@@ -1,4 +1,7 @@
 import { serialize, parse } from 'cookie';
+// eslint-disable-next-line @next/next/no-server-import-in-page
+import { NextRequest } from 'next/server';
+
 import { ApiRequest, ApiResponse } from './types';
 
 const TOKEN_NAME = 'token';
@@ -27,14 +30,14 @@ export const removeTokenCookie = (res: ApiResponse) => {
   res.setHeader('Set-Cookie', cookie);
 };
 
-export const parseCookies = (req: ApiRequest) => {
+export const parseCookies = (req: ApiRequest | NextRequest) => {
   if (req.cookies) return req.cookies;
 
-  const cookie = req.headers?.cookie;
+  const cookie = 'cookie' in req.headers && req.headers?.cookie;
   return parse(cookie || '');
 };
 
-export const getTokenCookie = (req: ApiRequest) => {
+export const getTokenCookie = (req: ApiRequest | NextRequest) => {
   const cookies = parseCookies(req);
   return cookies[TOKEN_NAME];
 };

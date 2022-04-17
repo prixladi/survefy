@@ -1,6 +1,7 @@
 import { FieldError, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import address from '@sideway/address';
 
 import { UserCreateModel } from '~types';
 import ErrorMessage from './error-message';
@@ -25,17 +26,8 @@ const EmailInput: React.FC<Props> = ({ register, error }) => {
         placeholder="email@example.com"
         {...register('email', {
           required: { value: true, message: tAuth('emailRequired') },
-          validate: (email) => {
-            if (
-              !email.match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-              )
-            ) {
-              return tAuth('emailInvalid') as string;
-            }
-
-            return undefined;
-          },
+          validate: (email) =>
+            address.email.isValid(email) ? undefined : (tAuth('emailInvalid') as string),
         })}
         className={clsx(
           'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',

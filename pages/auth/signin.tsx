@@ -1,10 +1,8 @@
 import type { NextPage } from 'next';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
 import { UserCreateModel } from '~types';
-import useUserLogin from '~lib/hooks/api/user-user-login';
 
 import SEO from '~components/seo';
 import EmailInput from '~components/auth/email-input';
@@ -12,19 +10,20 @@ import PasswordInput from '~components/auth/password-input';
 import SubmitButton from '~components/auth/submit-button';
 import PageMove from '~components/auth/page-move';
 import AuthForm from '~components/auth/auth-form';
+import useLogin from '~lib/hooks/use-login';
 
 type Values = UserCreateModel;
 
 const Home: NextPage = () => {
+  const { t } = useTranslation('t');
   const { t: tAuth } = useTranslation('t', { keyPrefix: 'pages.auth' });
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm<Values>();
-  const { mutateAsync: loginAsync } = useUserLogin();
-  const router = useRouter();
+  const { loginAsync } = useLogin();
 
   return (
     <div>
@@ -33,13 +32,12 @@ const Home: NextPage = () => {
         onSubmit={handleSubmit(async (data) => {
           const response = await loginAsync(data);
           if (response.status === 'badRequest') {
-            setError('email', { type: 'manual', message: 'Invalid username or password' });
-            setError('password', { type: 'manual', message: 'Invalid username or password' });
-            return;
+            setError('email', { type: 'manual', message: tAuth('signin.invalid') });
+            setError('password', { type: 'manual', message: tAuth('signin.invalid') });
           }
-
-          if (response.status === 'ok') {
-            router.push('/dashboard');
+          if (response.status === 'serverError') {
+            setError('email', { type: 'manual', message: t('serverError') });
+            setError('password', { type: 'manual', message: t('serverError') });
           }
         })}
         fieldsSection={
@@ -50,7 +48,7 @@ const Home: NextPage = () => {
         }
         submitSection={
           <>
-            <SubmitButton text={tAuth('signin.button')} />
+            <SubmitButton isSubmitting={isSubmitting} text={tAuth('signin.button')} />
             <PageMove href="/auth/signup" text={tAuth('signin.goToSignup')} />
           </>
         }

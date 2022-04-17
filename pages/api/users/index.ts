@@ -29,7 +29,10 @@ router.post<ApiRequest<UserCreateModel>, ApiResponse>(
     const user = await User.fromRaw(req.body);
     await user.save();
 
-    return res.status(200).json(user.toObject());
+    return res.status(200).json({
+      email: user.email,
+      _id: user._id,
+    });
   },
 );
 

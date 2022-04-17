@@ -31,12 +31,12 @@ const Navbar: NextPage = () => {
           <div className="mt-10">
             <ul className="gap-2 lg:gap-12 flex flex-col text-center text-2xl">
               <Link href="/auth/signin">
-                {/* eslint-disable-next-line */}
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="pb-2 px-3">{t('$t(login, capitalize)')}</a>
               </Link>
               <span className="italic text-sm">- or -</span>
               <Link href="/auth/signup">
-                {/* eslint-disable-next-line */}
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className=" px-3">{t('$t(sign up, capitalize)')}</a>
               </Link>
             </ul>
@@ -51,11 +51,11 @@ const Navbar: NextPage = () => {
           </div>
           <div className="hidden md:flex items-center space-x-1 text-sm">
             <Link href="/auth/signin">
-                {/* eslint-disable-next-line */}
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a className="py-5 px-3">{t('$t(login, capitalize)')}</a>
             </Link>
             <Link href="/auth/signup">
-                {/* eslint-disable-next-line */}
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
                 {t('$t(sign up, capitalize)')}
               </a>

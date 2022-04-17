@@ -2,7 +2,7 @@ import { NextHandler } from 'next-connect';
 import passport from 'passport';
 import { Strategy } from 'passport-local';
 
-import { getLoginSession } from '../auth';
+import session from '../session';
 import { User } from '../models';
 import { ApiRequest, ApiResponse } from '../types';
 
@@ -21,14 +21,14 @@ passport.use(
         console.error(err);
       }
 
-      if (!user || !(await user.validatePassword(password))) {
-        done(null, null);
-      } else {
-        done(null, {
+      if (user && (await user.validatePassword(password))) {
+        return done(null, {
           id: user._id.toString(),
           email: user.email,
         });
       }
+
+      return done(null, null);
     },
   ),
 );
@@ -38,8 +38,8 @@ const auth = {
   protect:
     ({ allowUnauthenticated }: ProtectOptions) =>
     async (req: ApiRequest, res: ApiResponse, next: NextHandler) => {
-      const session = await getLoginSession(req);
-      if (session) req.user = session;
+      const user = await session.getLoginSession(req);
+      if (user) req.user = user;
 
       if (allowUnauthenticated || req.user) {
         next();

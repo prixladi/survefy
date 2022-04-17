@@ -6,6 +6,7 @@ const global = {
   password: 'password',
   email: 'email',
   appSuffix: '| Survefy',
+  serverError: 'There was an error comunicating with server',
 };
 
 export default global;

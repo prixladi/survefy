@@ -1,9 +1,18 @@
 import type { NextPage } from 'next';
 
-const Dashboard: NextPage = () => (
-  <div>
-    <main>DASH</main>
-  </div>
-);
+import useLogout from '~lib/hooks/use-logout';
+
+const Dashboard: NextPage = () => {
+  const { logoutAsync } = useLogout();
+
+  return (
+    <div>
+      <main>DASH</main>
+      <button type="button" onClick={logoutAsync}>
+        Logout
+      </button>
+    </div>
+  );
+};
 
 export default Dashboard;
