@@ -1,6 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next';
 
 import useLogout from '~lib/hooks/use-logout';
+import pages from '~lib/pages';
 import session from '~lib/server/session';
 import { UserAuthPayload } from '~types';
 
@@ -13,7 +14,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (context)
   if (!user) {
     return {
       redirect: {
-        destination: '/auth/signout',
+        destination: pages.auth.signout,
       },
       props: {
         user,

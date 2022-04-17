@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Logo from './logo';
 import BurgerIcon from './burger-icon';
 import Cross from './cross-icon';
+import pages from '~lib/pages';
 
 type Props = {
   isLoggedIn: boolean;
@@ -29,7 +30,7 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
             </button>
           </div>
           <div className="flex items-center flex-col">
-            <Link href="/">
+            <Link href={pages.home}>
               <a>
                 <Logo />
               </a>
@@ -38,16 +39,16 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
           <div className="mt-10">
             <ul className="gap-2 lg:gap-12 flex flex-col text-center text-2xl">
               {isLoggedIn ? (
-                <Link href="/dashboard">
+                <Link href={pages.dashboard}>
                   <a className="pb-2 px-3">{t('$t(dashboard, capitalize)')}</a>
                 </Link>
               ) : (
                 <>
-                  <Link href="/auth/signin">
+                  <Link href={pages.auth.signin}>
                     <a className="pb-2 px-3">{t('$t(login, capitalize)')}</a>
                   </Link>
                   <span className="italic text-sm">- or -</span>
-                  <Link href="/auth/signup">
+                  <Link href={pages.auth.signup}>
                     <a className=" px-3">{t('$t(sign up, capitalize)')}</a>
                   </Link>
                 </>
@@ -60,7 +61,7 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between">
           <div className="flex space-x-4">
-            <Link href="/">
+            <Link href={pages.home}>
               <a>
                 <Logo />
               </a>
@@ -68,17 +69,17 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
           </div>
           <div className="hidden md:flex items-center space-x-1 text-sm">
             {isLoggedIn ? (
-              <Link href="/dashboard">
+              <Link href={pages.dashboard}>
                 <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
                   {t('$t(dashboard, capitalize)')}
                 </a>
               </Link>
             ) : (
               <>
-                <Link href="/auth/signin">
+                <Link href={pages.auth.signin}>
                   <a className="py-5 px-3">{t('$t(login, capitalize)')}</a>
                 </Link>
-                <Link href="/auth/signup">
+                <Link href={pages.auth.signup}>
                   <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
                     {t('$t(sign up, capitalize)')}
                   </a>

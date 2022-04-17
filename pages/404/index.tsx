@@ -1,15 +1,16 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import pages from '~lib/pages';
 
-const Dashboard: NextPage = () => {
+const NotFound: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/');
+    router.replace(pages.home);
   }, [router]);
 
   return null;
 };
 
-export default Dashboard;
+export default NotFound;

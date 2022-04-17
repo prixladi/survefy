@@ -8,6 +8,7 @@ import Logo from '~components/logo';
 import Navbar from '~components/navbar';
 import SEO from '~components/seo';
 
+import pages from '~lib/pages';
 import session from '~lib/server/session';
 
 import { UserAuthPayload } from '~types';
@@ -35,7 +36,7 @@ const Home: NextPage<PageProps> = ({ user }) => {
             <div>
               <div className="font-bold text-5xl">{tHome('firstArticle.title')}</div>
               <p className="text-xl font-normal">{tHome('firstArticle.text')}</p>
-              <CallToAction href="/auth/signup" text={tHome('firstArticle.ctaRegisterButton')} />
+              <CallToAction href={pages.auth.signup} text={tHome('firstArticle.ctaRegisterButton')} />
             </div>
             <ContentImage src="/assets/baseImage.png" />
           </ContentPart>

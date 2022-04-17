@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import pages from '~lib/pages';
 
 import { UserLoginModel } from '~types';
 
@@ -13,7 +14,7 @@ const useLogin = () => {
       const res = await mutateAsync(model);
 
       if (res.status === 'ok') {
-        router.push('/dashboard');
+        router.push(pages.dashboard);
       }
 
       return res;

@@ -11,6 +11,7 @@ import SubmitButton from '~components/auth/submit-button';
 import PageMove from '~components/auth/page-move';
 import AuthForm from '~components/auth/auth-form';
 import useLogin from '~lib/hooks/use-login';
+import pages from '~lib/pages';
 
 type Values = UserCreateModel;
 
@@ -49,7 +50,7 @@ const Signin: NextPage = () => {
         submitSection={
           <>
             <SubmitButton isSubmitting={isSubmitting} text={tAuth('signin.button')} />
-            <PageMove href="/auth/signup" text={tAuth('signin.goToSignup')} />
+            <PageMove href={pages.auth.signup} text={tAuth('signin.goToSignup')} />
           </>
         }
       />

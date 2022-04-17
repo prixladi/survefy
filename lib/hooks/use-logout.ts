@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import pages from '~lib/pages';
 
 import useUserLogout from './api/use-user-logout';
 
@@ -9,7 +10,7 @@ const useLogout = () => {
   return {
     logoutAsync: async () => {
       await mutateAsync();
-      router.push('/');
+      router.push(pages.home);
     },
   };
 };
