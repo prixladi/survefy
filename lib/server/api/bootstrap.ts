@@ -3,7 +3,7 @@ import { NextHandler } from 'next-connect';
 
 import { dbInit } from '../models/db';
 
-type BootstrapItem = 'DB' | 'REDIS';
+type BootstrapItem = 'DB';
 type Options = Partial<Record<BootstrapItem, boolean>>;
 
 const tasks = {} as Partial<Record<BootstrapItem, Promise<void>>>;

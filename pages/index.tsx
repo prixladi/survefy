@@ -22,7 +22,7 @@ const Home: NextPage = () => {
             <div>
               <div className="font-bold text-5xl">{tHome('firstArticle.title')}</div>
               <p className="text-xl font-normal">{tHome('firstArticle.text')}</p>
-              <CallToAction href="" text={tHome('firstArticle.ctaRegisterButton')} />
+              <CallToAction href="/auth/signup" text={tHome('firstArticle.ctaRegisterButton')} />
             </div>
             <ContentImage src="/assets/baseImage.png" />
           </ContentPart>

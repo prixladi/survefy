@@ -2,15 +2,21 @@ import { Model, HydratedDocument } from 'mongoose';
 
 import { mongoose } from '../db';
 
+import validatePassword from './methods/validate-password';
+
 import fromRaw from './statics/from-raw';
 import hashPassword from './statics/hash-password';
 import normalizeEmail from './statics/normalize-email';
 
 const { Schema } = mongoose;
 
-type UserAttributes = {
+export type UserAttributes = {
   email: string;
   passwordHash: string;
+};
+
+type UserMethods = {
+  validatePassword: typeof validatePassword;
 };
 
 type UserStatics = {
@@ -19,9 +25,9 @@ type UserStatics = {
   fromRaw: typeof fromRaw;
 };
 
-export type UserModel = Model<UserAttributes> & UserStatics;
+export type UserModel = Model<UserAttributes, Record<string, never>, UserMethods> & UserStatics;
 
-export type User = HydratedDocument<UserAttributes>;
+export type User = HydratedDocument<UserAttributes, UserMethods>;
 
 // create user model
 const schema = new Schema<UserAttributes, UserModel>({
@@ -35,6 +41,8 @@ const schema = new Schema<UserAttributes, UserModel>({
     required: [true, 'Password hash field is required'],
   },
 });
+
+schema.method('validatePassword', validatePassword);
 
 schema.static('hashPassword', hashPassword);
 schema.static('normalizeEmail', normalizeEmail);

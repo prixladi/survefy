@@ -6,12 +6,12 @@ const validationKeys = ['body', 'query', 'params'] as const;
 type ValidationKeys = typeof validationKeys[number];
 type Options = Partial<Record<ValidationKeys, SchemaLike>>;
 
-const validate = (schemas: Options) => {
-  return async (req: NextApiRequest, res: NextApiResponse, next: NextHandler) => {
+const validate =
+  (schemas: Options) => async (req: NextApiRequest, res: NextApiResponse, next: NextHandler) => {
     const bodySchema = schemas.body;
 
     if (bodySchema) {
-      const {error} = joi.compile(bodySchema).validate(req.body, {
+      const { error } = joi.compile(bodySchema).validate(req.body, {
         abortEarly: false,
       });
 
@@ -23,8 +23,7 @@ const validate = (schemas: Options) => {
       }
     }
 
-    next();
+    return next();
   };
-};
 
 export default validate;

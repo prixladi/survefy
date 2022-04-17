@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
-import useUserCreateMutation from '~lib/hooks/api/use-user-create-mutation';
 import { UserCreateModel } from '~types';
+import useUserLogin from '~lib/hooks/api/user-user-login';
 
 import SEO from '~components/seo';
 import EmailInput from '~components/auth/email-input';
@@ -22,33 +23,38 @@ const Home: NextPage = () => {
     formState: { errors },
     setError,
   } = useForm<Values>();
-  const { mutateAsync } = useUserCreateMutation();
+  const { mutateAsync: loginAsync } = useUserLogin();
+  const router = useRouter();
 
   return (
     <div>
       <SEO title={tAuth('signin.title')} />
-      <div className="mx-2">
-        <AuthForm
-          onSubmit={handleSubmit(async (data) => {
-            const response = await mutateAsync(data);
-            if (response.status === 'conflict') {
-              setError('email', { type: 'manual', message: 'Email already exists' });
-            }
-          })}
-          fieldsSection={
-            <>
-              <EmailInput register={register} error={errors.email} />
-              <PasswordInput register={register} error={errors.password} />
-            </>
+      <AuthForm
+        onSubmit={handleSubmit(async (data) => {
+          const response = await loginAsync(data);
+          if (response.status === 'badRequest') {
+            setError('email', { type: 'manual', message: 'Invalid username or password' });
+            setError('password', { type: 'manual', message: 'Invalid username or password' });
+            return;
           }
-          submitSection={
-            <>
-              <SubmitButton text={tAuth('signin.button')} />
-              <PageMove href="/auth/signup" text={tAuth('signin.goToSignup')} />
-            </>
+
+          if (response.status === 'ok') {
+            router.push('/dashboard');
           }
-        />
-      </div>
+        })}
+        fieldsSection={
+          <>
+            <EmailInput register={register} error={errors.email} />
+            <PasswordInput register={register} error={errors.password} />
+          </>
+        }
+        submitSection={
+          <>
+            <SubmitButton text={tAuth('signin.button')} />
+            <PageMove href="/auth/signup" text={tAuth('signin.goToSignup')} />
+          </>
+        }
+      />
     </div>
   );
 };

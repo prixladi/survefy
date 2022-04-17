@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 
 import { UserCreateModel } from '~types';
+import ErrorMessage from './error-message';
 
 type Values = UserCreateModel;
 
@@ -43,7 +44,7 @@ const EmailInput: React.FC<Props> = ({ register, error }) => {
           },
         )}
       />
-      {error && <span className="text-red-500 text-xs font-bold px-2">{error.message}</span>}
+      <ErrorMessage error={error} />
     </div>
   );
 };
