@@ -3,13 +3,13 @@ import { NextHandler } from 'next-connect';
 
 import { sleep } from '~lib/utils';
 
+import config from '../config';
 import { dbInit } from '../models/db';
 
 type BootstrapItem = 'DB';
 type Options = Partial<Record<BootstrapItem, boolean>>;
 
 const tasks = {} as Partial<Record<BootstrapItem, Promise<void>>>;
-const bootstrapTimeoutMs = 5 * 1000;
 
 const booststrapMiddleware =
   (opt: Options) => async (_: NextApiRequest, res: NextApiResponse, next: NextHandler) => {
@@ -22,10 +22,13 @@ const booststrapMiddleware =
     let timeouted = false;
     if (promises.length) {
       const all = Promise.all(promises);
-      const timeout = new Promise(async (res) => {
-        await sleep(5000);
-        timeouted = true;
-        res(null);
+      const timeout = new Promise((resolve, reject) => {
+        sleep(5000)
+          .then(() => {
+            timeouted = true;
+            resolve(null);
+          })
+          .catch(() => reject());
       });
 
       await Promise.race([all, timeout]);
@@ -33,11 +36,11 @@ const booststrapMiddleware =
       if (timeouted) {
         return res
           .status(503)
-          .json({ message: `Timeout '${bootstrapTimeoutMs}' in bootstrap reached.` });
+          .json({ message: `Timeout ${config.bootstrap.timeoutMS}ms in bootstrap reached.` });
       }
     }
 
-    next();
+    return next();
   };
 
 export const bootstrap = (opt: Options) => {

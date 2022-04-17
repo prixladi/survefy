@@ -7,7 +7,7 @@ const Signout: NextPage = () => {
   const { logoutAsync } = useLogout();
 
   useEffect(() => {
-    console.log("aaa");
+    console.log('aaa');
     logoutAsync();
   }, []);
 

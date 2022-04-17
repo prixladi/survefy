@@ -23,6 +23,7 @@
     "react/jsx-props-no-spreading": 0,
     "no-underscore-dangle": 0,
     "jsx-a11y/anchor-is-valid": 0,
+    "no-console": 0,
     
     "import/no-cycle": 1,
     "@typescript-eslint/no-redeclare": 1,
