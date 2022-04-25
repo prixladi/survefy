@@ -1,4 +1,4 @@
-const Cross: React.FC = () => (
+const CrossIcon: React.FC = () => (
   <svg
     className="h-10 w-10"
     xmlns="http://www.w3.org/2000/svg"
@@ -10,4 +10,4 @@ const Cross: React.FC = () => (
   </svg>
 );
 
-export default Cross;
+export default CrossIcon;

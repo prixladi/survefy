@@ -7,6 +7,7 @@ import Logo from './logo';
 import BurgerIcon from './burger-icon';
 import Cross from './cross-icon';
 import pages from '~lib/pages';
+import useLogout from '~lib/hooks/use-logout';
 
 type Props = {
   isLoggedIn: boolean;
@@ -14,6 +15,7 @@ type Props = {
 
 const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
   const [open, setOpen] = useState(false);
+  const { logoutAsync } = useLogout();
   const { t } = useTranslation('t');
 
   return (
@@ -39,9 +41,15 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
           <div className="mt-10">
             <ul className="gap-2 lg:gap-12 flex flex-col text-center text-2xl">
               {isLoggedIn ? (
-                <Link href={pages.dashboard}>
-                  <a className="pb-2 px-3">{t('$t(dashboard, capitalize)')}</a>
-                </Link>
+                <>
+                  <Link href={pages.dashboard}>
+                    <a className="pb-2 px-3">{t('$t(dashboard, capitalize)')}</a>
+                  </Link>
+                  <span className="italic text-sm">- or -</span>
+                  <button onClick={logoutAsync} className="px-3 font-semibold">
+                    {t('$t(logout, capitalize)')}
+                  </button>
+                </>
               ) : (
                 <>
                   <Link href={pages.auth.signin}>
@@ -49,7 +57,7 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
                   </Link>
                   <span className="italic text-sm">- or -</span>
                   <Link href={pages.auth.signup}>
-                    <a className=" px-3">{t('$t(sign up, capitalize)')}</a>
+                    <a className="px-3">{t('$t(sign up, capitalize)')}</a>
                   </Link>
                 </>
               )}
@@ -69,11 +77,16 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
           </div>
           <div className="hidden md:flex items-center space-x-1 text-sm">
             {isLoggedIn ? (
-              <Link href={pages.dashboard}>
-                <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
-                  {t('$t(dashboard, capitalize)')}
-                </a>
-              </Link>
+              <>
+                <button onClick={logoutAsync} className="py-5 px-3 font-semibold">
+                  {t('$t(logout, capitalize)')}
+                </button>
+                <Link href={pages.dashboard}>
+                  <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
+                    {t('$t(dashboard, capitalize)')}
+                  </a>
+                </Link>
+              </>
             ) : (
               <>
                 <Link href={pages.auth.signin}>
@@ -83,7 +96,7 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
                   <a className="py-2 px-3 hover:bg-amber-900 hover:text-white text-sm rounded border-amber-900 border-2 transition duration-300">
                     {t('$t(sign up, capitalize)')}
                   </a>
-                </Link>{' '}
+                </Link>
               </>
             )}
           </div>

@@ -5,7 +5,7 @@ import { bootstrap } from '~lib/server';
 import validation from '~lib/server/api/validation';
 import { User } from '~lib/server/models';
 import { ApiRequest, ApiResponse } from '~lib/server/types';
-import { UserCreateModel } from '~types';
+import { UserCreateDto } from '~types';
 
 const router = nc();
 
@@ -14,7 +14,7 @@ const bodySchema = {
   password: joi.string().min(6).required(),
 };
 
-router.post<ApiRequest<UserCreateModel>, ApiResponse>(
+router.post<ApiRequest<UserCreateDto>, ApiResponse>(
   bootstrap({ DB: true }),
   validation({ body: bodySchema }),
   async (req, res) => {

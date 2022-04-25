@@ -10,6 +10,7 @@ body {
   @apply bg-center;
   @apply bg-fixed;
   @apply min-h-screen relative;
+  @apply overflow-scroll;
 }
 
 .cta {

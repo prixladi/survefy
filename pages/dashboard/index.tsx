@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next';
+import Navbar from '~components/navbar';
 
 import useLogout from '~lib/hooks/use-logout';
 import pages from '~lib/pages';
@@ -30,10 +31,8 @@ const Dashboard: NextPage<PageProps> = ({ user }) => {
 
   return (
     <div>
-      <div>{JSON.stringify(user)}</div>
-      <button type="button" onClick={logoutAsync}>
-        Logout
-      </button>
+      <Navbar isLoggedIn={true} />
+      <div className='pt-20'>{JSON.stringify(user)}</div>
     </div>
   );
 };

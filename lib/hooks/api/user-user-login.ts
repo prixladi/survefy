@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useMutation } from 'react-query';
 
-import { UserLoginModel } from '~types';
+import { UserLoginDto } from '~types';
 
 type Response =
   | { status: 'ok'; data: any }
@@ -9,7 +9,7 @@ type Response =
   | { status: 'serverError'; data?: undefined };
 
 const useUserLogin = () =>
-  useMutation(async (model: UserLoginModel): Promise<Response> => {
+  useMutation(async (model: UserLoginDto): Promise<Response> => {
     const { status, data } = await axios.post('/api/auth/login', model, {
       validateStatus: () => true,
     });

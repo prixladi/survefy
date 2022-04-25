@@ -3,17 +3,17 @@ import { initReactI18next } from 'react-i18next';
 
 import global from './global';
 
-import home from './pages/home';
-import auth from './pages/auth';
+import home from './home';
+import auth from './auth';
+import dashboard from './dashboard';
 
 const resources = {
   en: {
     t: {
       ...global,
-      pages: {
-        ...home,
-        ...auth,
-      },
+      home: { ...home },
+      auth: { ...auth },
+      dash: { ...dashboard },
     },
   },
 };

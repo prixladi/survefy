@@ -6,7 +6,7 @@ import auth from '~lib/server/api/auth';
 import validation from '~lib/server/api/validation';
 import session from '~lib/server/session';
 import { ApiRequest, ApiResponse } from '~lib/server/types';
-import { UserLoginModel } from '~types';
+import { UserLoginDto } from '~types';
 
 const router = nc();
 
@@ -15,7 +15,7 @@ const bodySchema = {
   password: joi.string().required(),
 };
 
-router.post<ApiRequest<UserLoginModel>, ApiResponse>(
+router.post<ApiRequest<UserLoginDto>, ApiResponse>(
   bootstrap({ DB: true }),
   validation({ body: bodySchema }),
   auth.authenticate(),

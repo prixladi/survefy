@@ -29,7 +29,6 @@ export type UserModel = Model<UserAttributes, Record<string, never>, UserMethods
 
 export type User = HydratedDocument<UserAttributes, UserMethods>;
 
-// create user model
 const schema = new Schema<UserAttributes, UserModel>({
   email: {
     type: String,

@@ -1,5 +1,4 @@
 const auth = {
-  auth: {
     email: '$t(email, capitalize)',
     emailRequired: '$t(pages.auth.email) is required',
     emailInvalid: '$t(pages.auth.email) is in invalid format',
@@ -18,7 +17,6 @@ const auth = {
       button: '$t(register, capitalize)',
       goToSignin: 'Already have an account?',
     },
-  },
 };
 
 export default auth;

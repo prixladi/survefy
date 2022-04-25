@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { useMutation } from 'react-query';
 
-import { UserCreateDto } from '~types';
+import { SurveyCreateDto, SurveyDetailModel } from '~types';
 
 type Response =
-  | { status: 'ok'; data: any }
+  | { status: 'ok'; data: SurveyDetailModel }
   | { status: 'conflict'; data?: undefined }
   | { status: 'serverError'; data?: undefined };
 
-const useUserCreateMutation = () =>
-  useMutation(async (model: UserCreateDto): Promise<Response> => {
-    const { status, data } = await axios.post('/api/users', model, {
+const useSurveyCreate = () =>
+  useMutation(async (model: SurveyCreateDto): Promise<Response> => {
+    const { status, data } = await axios.post('/api/surveys', model, {
       validateStatus: () => true,
     });
 
@@ -20,4 +20,4 @@ const useUserCreateMutation = () =>
     return { status: 'ok', data };
   });
 
-export default useUserCreateMutation;
+export default useSurveyCreate;

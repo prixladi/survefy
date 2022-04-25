@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import pages from '~lib/pages';
 
-import { UserLoginModel } from '~types';
+import { UserLoginDto } from '~types';
 
 import useUserLogin from './api/user-user-login';
 
@@ -10,7 +10,7 @@ const useLogin = () => {
   const { mutateAsync } = useUserLogin();
 
   return {
-    loginAsync: async (model: UserLoginModel) => {
+    loginAsync: async (model: UserLoginDto) => {
       const res = await mutateAsync(model);
 
       if (res.status === 'ok') {

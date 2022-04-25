@@ -1,9 +1,9 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'react-i18next';
 
-import CallToAction from '~components/call-to-action';
-import ContentImage from '~components/home/content-image';
-import ContentPart from '~components/home/content-part';
+import CallToAction from '~components/content/call-to-action';
+import ContentImage from '~components/content/content-image';
+import ContentPart from '~components/content/content-part';
 import Logo from '~components/logo';
 import Navbar from '~components/navbar';
 import SEO from '~components/seo';
@@ -23,12 +23,11 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (context)
 };
 
 const Home: NextPage<PageProps> = ({ user }) => {
-  const { t: tHome } = useTranslation('t', { keyPrefix: 'pages.home' });
+  const { t: tHome } = useTranslation('t', { keyPrefix: 'home' });
 
   return (
     <div>
       <SEO title={tHome('title')} />
-
       <main>
         <Navbar isLoggedIn={!!user} />
         <div className="flex flex-col gap-12 pt-20 md:pt-28 lg:pt-32 prose max-w-full">
