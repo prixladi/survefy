@@ -11,8 +11,8 @@ const ContentPart: React.FC<Props> = ({ children, className, bgVariant }) => {
   const Wrapper: React.FC = useMemo(
     () =>
       bgVariant
-        ? ({ children: ch }) => <div className="bg-gray-900 text-white">{ch}</div>
-        : ({ children: ch }) => <div className="text-gray-700">{ch}</div>,
+        ? ({ children: ch }) => <article className="bg-gray-900 text-white">{ch}</article>
+        : ({ children: ch }) => <article className="text-gray-700">{ch}</article>,
     [bgVariant],
   );
 

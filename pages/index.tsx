@@ -26,52 +26,54 @@ const Home: NextPage<PageProps> = ({ user }) => {
   const { t: tHome } = useTranslation('t', { keyPrefix: 'home' });
 
   return (
-    <div>
-      <SEO title={tHome('title')} />
-      <main>
+    <>
+      <header>
+        <SEO title={tHome('title')} />
         <Navbar isLoggedIn={!!user} />
-        <div className="flex flex-col gap-12 pt-20 md:pt-28 lg:pt-32 prose max-w-full">
-          <ContentPart className="flex lg:flex-row flex-1 gap-8 flex-col-reverse">
-            <div>
-              <div className="font-bold text-5xl">{tHome('firstArticle.title')}</div>
-              <p className="text-xl font-normal">{tHome('firstArticle.text')}</p>
-              <CallToAction href={pages.auth.signup} text={tHome('firstArticle.ctaRegisterButton')} />
-            </div>
-            <ContentImage src="/assets/baseImage.png" />
-          </ContentPart>
+      </header>
 
-          <ContentPart className="flex flex-col lg:flex-row flex-1 gap-8" bgVariant="bg-gray-900">
-            <ContentImage src="/assets/info.png" />
-            <div>
-              <div>
-                <div className="font-bold text-3xl">{tHome('secondArticle.0.title')}</div>
-                <p className="text-xl font-normal">{tHome('secondArticle.0.text')}</p>
-              </div>
-              <div>
-                <div className="font-bold text-3xl">{tHome('secondArticle.1.title')}</div>
-                <p className="text-xl font-normal">{tHome('secondArticle.1.text')}</p>
-              </div>
-              <div>
-                <div className="font-bold text-3xl">{tHome('secondArticle.2.title')}</div>
-                <p className="text-xl font-normal">{tHome('secondArticle.2.text')}</p>
-              </div>
-            </div>
-          </ContentPart>
+      <main className="flex flex-col gap-12 pt-20 md:pt-28 lg:pt-32 prose max-w-full">
+        <ContentPart className="flex lg:flex-row flex-1 gap-8 flex-col-reverse">
+          <div>
+            <div className="font-bold text-5xl">{tHome('firstArticle.title')}</div>
+            <p className="text-xl font-normal">{tHome('firstArticle.text')}</p>
+            <CallToAction href={pages.auth.signup} text={tHome('firstArticle.ctaRegisterButton')} />
+          </div>
+          <ContentImage src="/assets/baseImage.png" />
+        </ContentPart>
 
-          <ContentPart className="flex flex-col gap-8">
+        <ContentPart className="flex flex-col lg:flex-row flex-1 gap-8" bgVariant="bg-gray-900">
+          <ContentImage src="/assets/info.png" />
+          <div>
             <div>
-              <div className="font-bold text-3xl">{tHome('thirdArticle.title')}</div>
-              <p className="text-xl font-normal">{tHome('thirdArticle.text')}</p>
+              <div className="font-bold text-3xl">{tHome('secondArticle.0.title')}</div>
+              <p className="text-xl font-normal">{tHome('secondArticle.0.text')}</p>
             </div>
-            <ContentImage src="/assets/info.png" />
-          </ContentPart>
-        </div>
-        <footer className="bg-gray-900 flex flex-col justify-center items-center pb-5">
-          <Logo />
-          <div className="text-white text-sm">© 2022 Survefy, All Rights Reserved.</div>
-        </footer>
+            <div>
+              <div className="font-bold text-3xl">{tHome('secondArticle.1.title')}</div>
+              <p className="text-xl font-normal">{tHome('secondArticle.1.text')}</p>
+            </div>
+            <div>
+              <div className="font-bold text-3xl">{tHome('secondArticle.2.title')}</div>
+              <p className="text-xl font-normal">{tHome('secondArticle.2.text')}</p>
+            </div>
+          </div>
+        </ContentPart>
+
+        <ContentPart className="flex flex-col gap-8">
+          <div>
+            <div className="font-bold text-3xl">{tHome('thirdArticle.title')}</div>
+            <p className="text-xl font-normal">{tHome('thirdArticle.text')}</p>
+          </div>
+          <ContentImage src="/assets/info.png" />
+        </ContentPart>
       </main>
-    </div>
+      
+      <footer className="bg-gray-900 flex flex-col justify-center items-center pb-5">
+        <Logo />
+        <div className="text-white text-sm">© 2022 Survefy, All Rights Reserved.</div>
+      </footer>
+    </>
   );
 };
 

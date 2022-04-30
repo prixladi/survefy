@@ -1,11 +1,11 @@
 const auth = {
     email: '$t(email, capitalize)',
-    emailRequired: '$t(pages.auth.email) is required',
-    emailInvalid: '$t(pages.auth.email) is in invalid format',
+    emailRequired: '$t(auth.email) is required',
+    emailInvalid: '$t(auth.email) is in invalid format',
     emailDuplicate: 'User with $t(pages.auth.email) already exists',
     password: '$t(password, capitalize)',
-    passwordRequired: '$t(pages.auth.password) is required',
-    passwordShort: '$t(pages.auth.password) must be at least 6 characters',
+    passwordRequired: '$t(auth.password) is required',
+    passwordShort: '$t(auth.password) must be at least 6 characters',
     signin: {
       title: '$t(login, capitalize) $t(appSuffix)',
       button: '$t(login, capitalize)',
