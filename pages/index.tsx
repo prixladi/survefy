@@ -43,7 +43,7 @@ const Home: NextPage<PageProps> = ({ user }) => {
         </ContentPart>
 
         <ContentPart className="flex flex-col lg:flex-row flex-1 gap-8" bgVariant="bg-gray-900">
-          <ContentImage src="/assets/info.png" />
+          <ContentImage src="/assets/loginImage.png" />
           <div>
             <div>
               <div className="font-bold text-3xl">{tHome('secondArticle.0.title')}</div>
@@ -65,7 +65,7 @@ const Home: NextPage<PageProps> = ({ user }) => {
             <div className="font-bold text-3xl">{tHome('thirdArticle.title')}</div>
             <p className="text-xl font-normal">{tHome('thirdArticle.text')}</p>
           </div>
-          <ContentImage src="/assets/info.png" />
+          <ContentImage src="/assets/baseImage.png" />
         </ContentPart>
       </main>
       
